@@ -18,19 +18,19 @@ function App() {
       id: 'viz1',
       title: 'Figure 1: Algorithm Performance Comparison',
       subtitle: 'Grouped bar chart comparing 4 algorithms across 4 metrics',
-      src: '/Figure_1_Algorithm_Comparison.html',
+      src: `${import.meta.env.BASE_URL}Figure_1_Algorithm_Comparison.html`,
     },
     {
       id: 'viz2',
       title: 'Figure 2: Language Representation Shift',
       subtitle: 'Before/after language distribution (46.1% → 75% Kazakh)',
-      src: '/Figure_2_Language_Shift.html',
+      src: `${import.meta.env.BASE_URL}Figure_2_Language_Shift.html`,
     },
     {
       id: 'viz3',
       title: 'Figure 3: Cross-Validation Stability',
       subtitle: 'Metric distribution across 5 data folds',
-      src: '/Figure_3_CrossValidation_Stability.html',
+      src: `${import.meta.env.BASE_URL}Figure_3_CrossValidation_Stability.html`,
     }
   ];
 
@@ -77,7 +77,7 @@ function App() {
         </div>
       </aside>
 
-      {/* Main Content */}
+      {/* Main Content - Now Scrollable */}
       <main className="main-content">
         {activeView === 'home' ? (
           <div className="home-view">
@@ -105,17 +105,18 @@ function App() {
             </button>
           </div>
         ) : (
-          <div className="visualization-grid">
-            {visualizations.map((viz) => (
-              <div key={viz.id} className="viz-column">
+          <div className="visualization-container">
+            {visualizations.map((viz, index) => (
+              <div key={viz.id} className="viz-section">
                 <div className="viz-header">
                   <h3>{viz.title}</h3>
                   <p>{viz.subtitle}</p>
                 </div>
-                <div className="viz-container">
+                <div className="viz-wrapper">
                   {loadingStates[viz.id] && (
                     <div className="loading">
                       <div className="spinner"></div>
+                      <div>Loading visualization...</div>
                     </div>
                   )}
                   <iframe

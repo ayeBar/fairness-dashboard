@@ -9,25 +9,28 @@ body {
   background: #f7fafc;
   overflow: hidden;
   height: 100vh;
+  width: 100vw;
 }
 
+/* ============================================================================
+   GRID LAYOUT - Sidebar + Content
+   ============================================================================ */
 .app-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 260px 1fr;
   height: 100vh;
-  overflow: hidden;
+  width: 100vw;
 }
 
 /* ============================================================================
    SIDEBAR
    ============================================================================ */
 .sidebar {
-  width: 260px;
+  grid-column: 1;
   background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
   color: white;
-  display: flex;
-  flex-direction: column;
   padding: 30px 20px;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
   animation: slideInLeft 0.5s ease-out;
 }
 
@@ -48,13 +51,13 @@ body {
 }
 
 .nav-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: block;
   margin-bottom: 40px;
 }
 
 .nav-button {
+  display: block;
+  width: 100%;
   background: rgba(255, 255, 255, 0.1);
   border: none;
   color: white;
@@ -62,11 +65,9 @@ body {
   border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: all 0.3s ease;
   text-align: left;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
 }
 
 .nav-button:hover {
@@ -81,10 +82,11 @@ body {
 
 .nav-icon {
   font-size: 20px;
+  margin-right: 12px;
 }
 
 .sidebar-metrics {
-  margin-top: auto;
+  margin-top: 60px;
   padding-top: 30px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -117,22 +119,42 @@ body {
 }
 
 /* ============================================================================
-   MAIN CONTENT
+   MAIN CONTENT AREA (GRID COLUMN 2)
    ============================================================================ */
 .main-content {
-  flex: 1;
-  width: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  overflow: hidden;
+  grid-column: 2;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #f7fafc;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Custom scrollbar */
+.main-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 5px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
 }
 
 /* ============================================================================
    HOME VIEW
    ============================================================================ */
 .home-view {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
   animation: fadeIn 0.6s ease-out;
 }
 
@@ -208,68 +230,60 @@ body {
 }
 
 /* ============================================================================
-   VISUALIZATION GRID (3 COLUMNS)
+   VISUALIZATION CONTAINER - BLOCK LAYOUT
    ============================================================================ */
-.visualization-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+.visualization-container {
+  display: block;
   width: 100%;
-  height: 100%;
-  max-width: 100vw;
-  margin: 0 auto;
   animation: fadeIn 0.6s ease-out;
 }
 
-.viz-column {
+.viz-section {
+  display: block;
+  width: 100%;
   background: white;
-  max-height: 60vh;
-  min-width: 40vw;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
+  padding: 50px;
+  border-bottom: 1px solid #e2e8f0;
 }
 
-.viz-column:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+.viz-section:hover {
+  background: #fafbfc;
 }
 
 .viz-header {
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   padding-bottom: 15px;
   border-bottom: 2px solid #e2e8f0;
 }
 
 .viz-header h3 {
-  font-size: 16px;
+  font-size: 24px;
   color: #2d3748;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-weight: 600;
 }
 
 .viz-header p {
-  font-size: 13px;
+  font-size: 16px;
   color: #718096;
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
-.viz-container {
-  flex: 1;
+.viz-wrapper {
   position: relative;
+  width: 100%;
+  height: 750px;
   overflow: hidden;
-  min-height: 0;
+  background: white;
 }
 
-.viz-container iframe {
+.viz-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   border: none;
-  display: block;
 }
 
 /* Loading Animation */
@@ -280,6 +294,7 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 10;
+  color: #718096;
 }
 
 .spinner {
@@ -289,7 +304,7 @@ body {
   width: 40px;
   height: 40px;
   animation: spin 1s linear infinite;
-  margin: 0 auto;
+  margin: 0 auto 10px;
 }
 
 @keyframes spin {
@@ -297,10 +312,69 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* Responsive */
-@media (max-width: 1400px) {
-  .visualization-grid {
+/* ============================================================================
+   PLOTLY LEGEND FIX - Direct SVG Attribute Override
+   ============================================================================ */
+
+rect.bg{
+  width: auto;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 200px 1fr;
+  }
+
+  .viz-section {
+    padding: 30px;
+  }
+
+  .viz-wrapper {
+    height: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: auto 1fr;
+  }
+
+  .sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 20px;
+  }
+
+  .main-content {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .sidebar-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  .sidebar-metrics h3 {
+    display: none;
+  }
+
+  .viz-section {
+    padding: 20px;
+  }
+
+  .viz-wrapper {
+    height: 500px;
+  }
+
+  .home-view h1 {
+    font-size: 32px;
   }
 }
