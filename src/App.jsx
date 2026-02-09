@@ -12,6 +12,7 @@ function App() {
 
   const handleIframeLoad = (vizId) => {
     setLoadingStates(prev => ({ ...prev, [vizId]: false }));
+    
   };
 
   const visualizations = [
