@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import Paper from './Paper';
 
 function App() {
   const [activeView, setActiveView] = useState('visualization');
@@ -40,6 +41,7 @@ function App() {
       <aside className="sidebar">
         <div className="logo">
           <h2>Fairness-Aware Dashboard</h2>
+          <p className="tagline">YouTube Gaming Content</p>
         </div>
         
         <nav className="nav-menu">
@@ -57,27 +59,94 @@ function App() {
             <span className="nav-icon">📊</span>
             Visualizations
           </button>
+          <button
+            className={`nav-button ${activeView === 'paper' ? 'active' : ''}`}
+            onClick={() => setActiveView('paper')}
+          >
+            <span className="nav-icon">📄</span>
+            Paper
+          </button>
         </nav>
 
-        {/* Metrics in Sidebar */}
-        <div className="sidebar-metrics">
-          <h3>Key Metrics</h3>
+        {/* Research Overview */}
+        <div className="sidebar-section">
+          <h3>Research Overview</h3>
+          <div className="info-card">
+            <div className="info-label">Focus</div>
+            <div className="info-value">Provider-side fairness in multilingual gaming content</div>
+          </div>
+          <div className="info-card">
+            <div className="info-label">Method</div>
+            <div className="info-value">Post-processing re-ranking with boost factors</div>
+          </div>
+          <div className="info-card">
+            <div className="info-label">Dataset</div>
+            <div className="info-value">700 videos, 7 channels (Sept-Oct 2025)</div>
+          </div>
+        </div>
+
+        {/* Key Metrics */}
+        <div className="sidebar-section">
+          <h3>Key Results</h3>
           <div className="metric-item">
             <div className="metric-value">75%</div>
             <div className="metric-label">Kazakh Rep.</div>
+            <div className="metric-detail">1.63× lift</div>
           </div>
           <div className="metric-item">
             <div className="metric-value">85%</div>
             <div className="metric-label">Emerging</div>
+            <div className="metric-detail">2.98× lift</div>
           </div>
           <div className="metric-item">
             <div className="metric-value">98%</div>
             <div className="metric-label">Engagement</div>
+            <div className="metric-detail">Retention</div>
+          </div>
+        </div>
+
+        {/* Algorithm Parameters */}
+        <div className="sidebar-section">
+          <h3>Algorithm Setup</h3>
+          <div className="info-card">
+            <div className="info-label">Kazakh Boost</div>
+            <div className="info-value">1.25×</div>
+          </div>
+          <div className="info-card">
+            <div className="info-label">Emerging Boost</div>
+            <div className="info-value">1.25×</div>
+          </div>
+          <div className="info-card">
+            <div className="info-label">Threshold</div>
+            <div className="info-value">&lt;600K subs</div>
+          </div>
+          <div className="info-card">
+            <div className="info-label">Channel Limit</div>
+            <div className="info-value">2 per channel</div>
+          </div>
+        </div>
+
+        {/* Language Distribution */}
+        <div className="sidebar-section">
+          <h3>Dataset Languages</h3>
+          <div className="lang-bar">
+            <div className="lang-item" style={{width: '46.1%', background: '#1f77b4'}}>
+              <span>KZ 46%</span>
+            </div>
+            <div className="lang-item" style={{width: '43.1%', background: '#ff7f0e'}}>
+              <span>RU 43%</span>
+            </div>
+            <div className="lang-item" style={{width: '8.6%', background: '#2ca02c'}}>
+              <span>Mix 9%</span>
+            </div>
+            <div className="lang-item" style={{width: '2.2%', background: '#d62728'}}>
+              <span>EN 2%</span>
+            </div>
           </div>
         </div>
       </aside>
 
-      {/* Main Content - Now Scrollable */}
+      {/* Main Content */}
       <main className="main-content">
         {activeView === 'home' ? (
           <div className="home-view">
@@ -88,6 +157,17 @@ function App() {
               underrepresentation of Kazakh-language videos and emerging creators through 
               post-processing re-ranking algorithms.
             </p>
+            
+            <div className="dataset-info">
+              <h2>Research Highlights</h2>
+              <ul>
+                <li><strong>Objective:</strong> Address language-based and creator-size inequities in YouTube gaming recommendations</li>
+                <li><strong>Approach:</strong> Post-processing re-ranking with multiplicative boost factors (1.25× for Kazakh content and emerging creators)</li>
+                <li><strong>Key Achievement:</strong> 75% Kazakh representation and 85% emerging creator representation while maintaining 98% engagement retention</li>
+                <li><strong>Validation:</strong> Cross-validation confirmed stability (CV &lt;0.05 for all primary metrics)</li>
+              </ul>
+            </div>
+
             <div className="dataset-info">
               <h2>Dataset Overview</h2>
               <ul>
@@ -95,8 +175,21 @@ function App() {
                 <li><strong>Channels:</strong> 7 (215K-1.48M subscribers)</li>
                 <li><strong>Languages:</strong> Kazakh (46.1%), Russian (43.1%), Mixed (8.6%), English (2.1%)</li>
                 <li><strong>Period:</strong> September-October 2025</li>
+                <li><strong>Average Views:</strong> 143,004 per video</li>
+                <li><strong>Average Engagement:</strong> 0.0330 (3.3%)</li>
               </ul>
             </div>
+
+            <div className="dataset-info">
+              <h2>Methodology</h2>
+              <ul>
+                <li><strong>Stage 1:</strong> Content-Based Filtering (TF-IDF vectorization, 100 features)</li>
+                <li><strong>Stage 2:</strong> Collaborative Filtering (engagement rate, view counts, recency)</li>
+                <li><strong>Stage 3:</strong> Fairness-Aware Re-Ranking (boost factors + channel diversity penalties)</li>
+                <li><strong>Optimization:</strong> Grid search across 324 parameter configurations</li>
+              </ul>
+            </div>
+
             <button 
               className="cta-button"
               onClick={() => setActiveView('visualization')}
@@ -104,9 +197,11 @@ function App() {
               View Visualizations →
             </button>
           </div>
+        ) : activeView === 'paper' ? (
+          <Paper />
         ) : (
           <div className="visualization-container">
-            {visualizations.map((viz, index) => (
+            {visualizations.map((viz) => (
               <div key={viz.id} className="viz-section">
                 <div className="viz-header">
                   <h3>{viz.title}</h3>

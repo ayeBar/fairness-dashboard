@@ -232,11 +232,30 @@ body {
 /* ============================================================================
    VISUALIZATION CONTAINER - BLOCK LAYOUT
    ============================================================================ */
+/* ============================================================================
+   GLOBAL BOTTOM MARGIN - Prevents content cutoff on tablets/mobile
+   ============================================================================ */
+
 .visualization-container {
   display: block;
   width: 100%;
   animation: fadeIn 0.6s ease-out;
+  padding-bottom: 80px;  /* ⭐ ADD THIS */
 }
+
+.home-view {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  padding-bottom: 100px;  /* ⭐ ADD THIS */
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Ensure last viz section has extra space */
+.viz-section:last-child {
+  margin-bottom: 60px;  /* ⭐ ADD THIS */
+}
+
 
 .viz-section {
   display: block;
@@ -312,12 +331,216 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* ============================================================================
-   PLOTLY LEGEND FIX - Direct SVG Attribute Override
-   ============================================================================ */
+/* Tagline under logo */
+.logo .tagline {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: -15px;
+  font-weight: 300;
+}
 
-rect.bg{
-  width: auto;
+/* ============================================================================
+   SIDEBAR SECTIONS - New Research Info
+   ============================================================================ */
+.sidebar-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-section h3 {
+  font-size: 13px;
+  margin-bottom: 15px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.info-label {
+  font-size: 10px;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.info-value {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.metric-detail {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 3px;
+}
+
+/* Language Distribution Bar */
+.lang-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.lang-item {
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.lang-item span {
+  display: block;
+}
+
+/* ============================================================================
+   PAPER VIEW - Academic Paper Rendering (SIDEBAR STAYS)
+   ============================================================================ */
+.paper-view {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  padding-bottom: 120px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.paper-content {
+  background: white;
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Times New Roman', serif;
+  color: #1a202c;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.paper-content h1 {
+  font-size: 32px;
+  color: #2d3748;
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 20px;
+}
+
+.paper-content h2 {
+  font-size: 24px;
+  color: #2d3748;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 10px;
+}
+
+.paper-content h3 {
+  font-size: 20px;
+  color: #4a5568;
+  margin-top: 35px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.paper-content p {
+  margin-bottom: 18px;
+  text-align: justify;
+}
+
+.paper-content strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.paper-content ul {
+  margin: 20px 0;
+  padding-left: 30px;
+}
+
+.paper-content li {
+  margin-bottom: 10px;
+}
+
+.paper-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 30px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+.paper-content table th {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.paper-content table td {
+  padding: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.paper-content table tr:nth-child(even) {
+  background: #f7fafc;
+}
+
+.paper-content table tr:hover {
+  background: #edf2f7;
+}
+
+.paper-content code {
+  background: #f7fafc;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #c53030;
+}
+
+.paper-content pre {
+  background: #2d3748;
+  color: #e2e8f0;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 25px 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.paper-content pre code {
+  background: transparent;
+  color: #e2e8f0;
+  padding: 0;
+}
+
+.paper-content hr {
+  border: none;
+  border-top: 2px solid #e2e8f0;
+  margin: 40px 0;
+}
+
+.paper-content blockquote {
+  border-left: 4px solid #667eea;
+  padding-left: 20px;
+  margin: 25px 0;
+  color: #4a5568;
+  font-style: italic;
 }
 
 /* ============================================================================
